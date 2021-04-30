@@ -1,0 +1,23 @@
+{
+  "name": "jonathanjulio",
+  "version": "0.0.1",
+  "description": "",
+  "main": "scr/index",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon ./scr/index"
+  },
+  "keywords": [
+    "keymongo"
+  ],
+  "author": "jonathan julio",
+  "license": "ISC",
+  "dependencies": {
+    "@hapi/hapi": "^20.1.2",
+    "mongoose": "^5.12.5",
+    "multer": "^1.4.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}

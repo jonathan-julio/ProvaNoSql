@@ -3,6 +3,7 @@ const UserModel = require('../models/user')
 
 const getAll = async (request, h) => {
     const eventos =  await EventoModel.find({});
+    console.log(eventos);
     return eventos;
 };
 const getMeusEventos = async (req, h) => {
@@ -12,14 +13,16 @@ const getMeusEventos = async (req, h) => {
     var eventos = [];
     for (var i = 0; i < arr.length; i++){
         const evento =  await EventoModel.find({_id : arr[i]});
+        console.log(evento);
         eventos.push(evento);
     }
-    console.log(eventos[1][0]['longitude2']);
+    //console.log(eventos[1][0]['longitude2']);
     return eventos;
 };
 
 const getEventoId = async (request, h) => {
     const evento =  await EventoModel.find({_id : request.params.id});
+    console.log(evento);
     return evento;
 };
 
@@ -57,8 +60,10 @@ const addEvento = async (req, h) => {
     product.publico = publico;
     try {
         await product.save();
+        console.log("_ID : " + String(h.response(product.id)));
         return h.response(product.id).code(200);
     } catch (a) {
+        console.log(a);
         return h.response(a).code(404);
     };
 };
@@ -69,6 +74,7 @@ const saveUser = async (req, h) => {
     product.email = email;
     product.senha = senha;
     await product.save();
+    console.log('_ID :' + String(product._id));
     return h.response('_id :' + String(product._id)).code(200);
 };
 const addEventoEmUser = async (req, h) => {
@@ -95,8 +101,10 @@ const addEventoEmUser = async (req, h) => {
             }
             try {
                 user.save();
+                console.log("Evento adicionado em usuario.")
                 return h.response().code(200);
             } catch (erro) {
+                console.log(erro)
                 return h.response(erro).code(404);
             }
         }
@@ -119,8 +127,10 @@ const addMeuEvento = async (req, h) => {
             }
         user.meusEventos = arrayNovo(arr);
         user.save();
+        console.log("Evento adicionado.");
         return h.response().code(200);
     } catch (a){
+        console.log(a);
         return h.response(a).code(status);
     }
     
@@ -132,15 +142,18 @@ const login = async (req, h) => {
     if (!user){
         const status = 404;
         const response = "Usuario não encontrado."
+        console.log(response);
         return h.response(response).code(status);
     } else {
         if (user.senha == req.payload.senha){
             const status = 200;
-            const response = user._id;
-            return h.response(user).code(status);
+            const response = user;
+            console.log(response);
+            return h.response(response).code(status);
         } else {
             const status = 404;
             const response = "Senha invalida.";
+            console.log(response);
             return h.response(response).code(status);
         }
     }
@@ -149,8 +162,10 @@ const getUserId = async (req, h) => {
     var id = req.params.id;
     const user = await UserModel.findById({_id : id});
     if (!user){
+        console.log("Usuario não encontrado.");
         return h.response("Usuario não encontrado.").code(404);
     } else {
+        console.log(user);
         return h.response(user).code(200);
     }
 };
